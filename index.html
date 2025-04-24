@@ -1,68 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>OMI NO₂ + Edmonton Ground Comparison</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <title>OMI NO₂ and Edmonton Ground Stations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
   <style>
-    #map { height: 100vh; width: 100%; }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
+  <div id="map"></div>
 
-<div id="map"></div>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map centered on Edmonton
+    var map = L.map('map').setView([53.55, -113.5], 7);
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    // Add OpenStreetMap base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18
+    }).addTo(map);
 
-<script>
-  // Initialize the map centered on Edmonton
-  var map = L.map('map').setView([53.55, -113.5], 6);
+    // Define image bounds
+    var imageBounds = [[52.5, -115], [54, -112]];
 
-  // Add OpenStreetMap base layer
-  // var baseMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //  maxZoom: 18
-  // }).addTo(map);
+    // Add the OMI NO2 image overlay
+    L.imageOverlay('assets/omi_no2_jan11.png', imageBounds, {
+      opacity: 0.8
+    }).addTo(map);
 
-  // Add NASA GIBS OMI NO2 WMS Layer for Jan 15, 2024
-  var no2Layer = L.tileLayer.wms('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi', {
-    layers: 'OMI_NO2',
-    format: 'image/png',
-    transparent: true,
-    time: '2024-01-11',
-    opacity: 0.9, 
-    attribution: 'NASA GIBS / OMI NO₂'
-  }).addTo(map);
+    // Ground station NO2 values (hardcoded for Jan 2024)
+    var stations = [
+      { lat: 53.5557, lon: -113.4687, station: "Edmonton East", value: 31.5 },
+      { lat: 53.6436, lon: -113.6220, station: "St. Albert", value: 29.4 }
+    ];
 
-  // Hardcoded NO₂ values from ground monitors (ppb)
-  var no2Stations = [
-    { lat: 53.5461, lon: -113.4938, station: "Edmonton Central", value: 34.2 },
-    { lat: 53.5557, lon: -113.4687, station: "Edmonton East", value: 31.5 },
-    { lat: 53.6436, lon: -113.6220, station: "St. Albert", value: 29.4 }
-  ];
-
-  no2Stations.forEach(function(d) {
-    L.circleMarker([d.lat, d.lon], {
-      radius: 7,
-      fillColor: "red",
-      color: "#800",
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.65
-    })
-    .bindPopup(`<strong>${d.station}</strong><br>NO₂: ${d.value} ppb`)
-    .addTo(map);
-  });
-
-  // Optional control to toggle layers
-  L.control.layers(null, {
-    "OMI NO₂ (Jan 11)": no2Layer
-  }).addTo(map);
-</script>
-
+    stations.forEach(function(d) {
+      L.circleMarker([d.lat, d.lon], {
+        radius: 7,
+        fillColor: "red",
+        color: "#800",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.75
+      }).bindPopup(`<strong>${d.station}</strong><br>NO₂: ${d.value} ppb`).addTo(map);
+    });
+  </script>
 </body>
 </html>
