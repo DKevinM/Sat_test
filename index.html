@@ -21,7 +21,7 @@
 
 <script>
   // Initialize the map centered on Edmonton
-  var map = L.map('map').setView([53.55, -113.5], 7);
+  var map = L.map('map').setView([53.55, -113.5], 6);
 
   // Add OpenStreetMap base layer
   var baseMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,7 +33,8 @@
     layers: 'OMI_NO2d',
     format: 'image/png',
     transparent: true,
-    time: '2024-01-15',
+    time: '2024-01-11',
+    opacity: 0.9, 
     attribution: 'NASA GIBS / OMI NO₂'
   }).addTo(map);
 
@@ -59,7 +60,7 @@
 
   // Optional control to toggle layers
   L.control.layers(null, {
-    "OMI NO₂ (Jan 15)": no2Layer
+    "OMI NO₂ (Jan 11)": no2Layer
   }).addTo(map);
 </script>
 
