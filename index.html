@@ -31,19 +31,22 @@
     }).addTo(map);
 
     // Define image bounds
-    var imageBounds = [[52.5, -115], [54, -112]];
+    var imageBounds = [[51.9389, -116.0276], [54.7972, -111.2707]];
 
     // Add the OMI NO2 image overlay
-    L.imageOverlay('Jan182025_OMI_NO2b.png', imageBounds, {
+    L.imageOverlay('Jan182025_OMI_NO2c.png', imageBounds, {
       opacity: 0.8
     }).addTo(map);
 
     // Ground station NO2 values (hardcoded for Jan 2024)
     var stations = [
-      { lat: 53.5557, lon: -113.4687, station: "Edmonton East", value: 31.5 },
-      { lat: 53.6436, lon: -113.6220, station: "St. Albert", value: 29.4 }
+      { lat: 53.549483, lon: -113.485964, station: "Edmonton McCauley", value: 21.8 },
+      { lat: 53.626969, lon: -113.611905, station: "St. Albert", value: 15.4 },
+      { lat: 53.56466, lon: -113.562667, station: "Woodcroft", value: 17.1 },
+      { lat: 53.548008, lon: -113.367969, station: "Edmonton East", value: 15.1 },
+      { lat: 53.497784, lon: -113.527011, station: "Edmonton Lendrum", value: 14.7 } 
     ];
-
+    
     stations.forEach(function(d) {
       L.circleMarker([d.lat, d.lon], {
         radius: 7,
