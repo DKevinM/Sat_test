@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OMI NO₂ + Ground Comparison</title>
+  <title>OMI NO₂ + Edmonton Ground Comparison</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Leaflet CSS -->
@@ -19,17 +19,16 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- Your Map Logic -->
 <script>
-  // Initialize map
-  var map = L.map('map').setView([53.5461, -113.4938], 7);
+  // Initialize the map centered on Edmonton
+  var map = L.map('map').setView([53.55, -113.5], 7);
 
-  // Base map layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  // Add OpenStreetMap base layer
+  var baseMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
   }).addTo(map);
 
-  // NASA GIBS OMI NO2 WMS layer (Jan 15, 2024)
+  // Add NASA GIBS OMI NO2 WMS Layer for Jan 15, 2024
   var no2Layer = L.tileLayer.wms('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi', {
     layers: 'OMI_NO2d',
     format: 'image/png',
@@ -38,11 +37,11 @@
     attribution: 'NASA GIBS / OMI NO₂'
   }).addTo(map);
 
-  // Hardcoded NO₂ station values
+  // Hardcoded NO₂ values from ground monitors (ppb)
   var no2Stations = [
-    { lat: 53.5461, lon: -113.4938, station: "Edmonton Central", value: 33.8 },
-    { lat: 53.5557, lon: -113.4687, station: "Edmonton East", value: 30.2 },
-    { lat: 53.6436, lon: -113.6220, station: "St. Albert", value: 28.4 }
+    { lat: 53.5461, lon: -113.4938, station: "Edmonton Central", value: 34.2 },
+    { lat: 53.5557, lon: -113.4687, station: "Edmonton East", value: 31.5 },
+    { lat: 53.6436, lon: -113.6220, station: "St. Albert", value: 29.4 }
   ];
 
   no2Stations.forEach(function(d) {
@@ -58,7 +57,7 @@
     .addTo(map);
   });
 
-  // Optional: Add layer toggle
+  // Optional control to toggle layers
   L.control.layers(null, {
     "OMI NO₂ (Jan 15)": no2Layer
   }).addTo(map);
