@@ -55,7 +55,20 @@
         weight: 1,
         opacity: 1,
         fillOpacity: 0.75
-      }).bindPopup(`<strong>${d.station}</strong><br>NO₂: ${d.value} ppb`).addTo(map);
+        }).bindPopup(`
+          <strong>${d.station}</strong><br>
+          Ground NO₂: ${d.value} ppb
+        `).addTo(map);
+
+        L.marker([d.lat, d.lon], {
+    icon: L.divIcon({
+      className: 'station-label',
+      html: `${d.value} ppb`,
+      iconSize: [50, 20],
+      iconAnchor: [25, 10]
+    })
+  }).addTo(map);
+      
     });
   </script>
 </body>
