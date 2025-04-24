@@ -28,18 +28,7 @@
 </head>
 <body>
   <div id="map"></div>
-  <div id="legend" style="
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(255,255,255,0.8);
-    padding: 4px;
-    border: 1px solid #ccc;
-    z-index: 999;
-  ">
-    <img src="assets/scale.png" style="width: 200px;">
-  </div>
-  
+ 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
@@ -81,7 +70,7 @@
           Ground NO₂: ${d.value} ppb
         `).addTo(map);
 
-        L.marker([d.lat, d.lon], {
+    L.marker([d.lat, d.lon], {
     icon: L.divIcon({
       className: 'station-label',
       html: `${d.value} ppb`,
@@ -89,6 +78,11 @@
       iconAnchor: [25, 10]
     })
   }).addTo(map);
+
+L.imageOverlay("scale.png", [
+  [53.8, -114.4],   // top-left
+  [53.79, -113.4]   // bottom-right
+]).addTo(map);
       
     });
   </script>
